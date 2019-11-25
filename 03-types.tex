@@ -1,0 +1,293 @@
+\documentclass[myc.tex]{subfiles}
+
+\begin{document}
+\chapter{Примитивные типы данных}
+
+\section{\texttt{int}. Целые числа}
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=\varscale]{images-gen/type-int.png}
+\caption{Упрощенная синтаксическая диаграмма с наиболее используемыми целочисленными типами данных}
+\label{fig:type-int}
+\end{figure}
+
+Язык Си имеет пять различных типов для хранения целых чисел:
+
+\begin{itemize}
+\item \texttt{char}\index{char}: один байт. Используется для хранения одного символа\footnote{в ASCII или однобайтовой кодировке};
+\item \texttt{short}\index{short}: 16 бит в большинстве систем. Также известен как \texttt{short int}. Используется редко;
+\item \texttt{int}\index{int}: 
+\item \texttt{long}\index{long}: Также известен как \texttt{long int};
+\item \texttt{long long}\index{long long}: Также известен как \texttt{long long int}.
+\end{itemize}
+
+В зависимости от архитектуры процессора, разрядности компилятора (?) размеры могут отличаться. Например, при компиляции кода для архитектуры AVR (8-ми битные микроконтроллеры, в том числе и платы arduino) размер типа данных \texttt{int} будет составлять 2 байта.
+
+Следующий код, собранный под архитектуры x86 и amd64, будет выводить различный результат:%\footnote{в примере использован формат вывода \texttt{\%lu}, вместо привычного \texttt{\%d}, потому что оператор \texttt{sizeof} возвращает число с типом данных \texttt{unsigned long}. Если попытаться использовать \texttt{\%d}, то при выводе произойдёт неявная конвертация беззнакового числа в знаковое и компилятор выдаст предупреждение:
+%\texttt{warning: format specifies type 'int' but the argument has type 'unsigned long' [-Wformat]}
+%}:
+\begin{lstlisting}
+printf("%lu\n", sizeof(char));
+printf("%lu\n", sizeof(short));
+printf("%lu\n", sizeof(int));
+printf("%lu\n", sizeof(long));
+printf("%lu\n", sizeof(long long));
+\end{lstlisting}
+Результат выполнения программы:
+\begin{verbatim}
+1
+2
+4
+8
+8
+\end{verbatim} 
+
+
+% char - стандарт гарантирует мнимальный (?) размер в один байт
+
+Примеры целых чисел: \texttt{-13 0 42}.
+
+
+
+
+
+Беззнаковые: \texttt{unsigned}\index{unsigned}.
+
+\begin{small}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+ & \textbf{unsigned} & \textbf{signed}\\
+\hline
+00000000 & 0 & 0\\
+00000001 & 1 & 1\\
+00000010 & 2 & 2\\
+... & ... & ...\\
+01111111 & 127 & 127\\
+\textbf{1}0000000 & 128 & 0\\
+\textbf{1}0000001 & 129 & -1\\
+... & ... & ...\\
+\textbf{1}1111101 & 253 & -125\\
+\textbf{1}1111110 & 254 & -126\\
+\textbf{1}1111111 & 255 & -127\\%TODO check!
+\hline
+\end{tabular}
+\end{center}
+\end{small}
+
+Типичные размеры для 32 битной архитектуры.
+
+\noindent
+\begin{small}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Тип} & \textbf{Число бит} & \textbf{Диапазон возможных\newline значений}\\
+\hline
+\texttt{unsigned char} & 8 & от 0 до 255 ($2^8-1$)\\ 
+\texttt{char} & 8 & от -128 до 127 ($2^7-1$)\\ % 128!
+\hline
+cell7 & 16 & cell9 \\ 
+cell7 & 32 & cell9 \\ 
+cell7 & 32 & cell9 \\ 
+cell7 & 64 & cell9 \\ 
+\hline
+\end{tabularx}
+\end{small}
+
+
+Переполнение знакового и беззнакового целого числа
+
+//UB!
+
+таблички
+
+11111110 254
+11111111 255
+00000000
+00000001
+
+
+
+
+\subsection{\texttt{size\_t}}
+Для различных счётчиков (от 0) рекомендуется использовать специальный тип данных \texttt{size\_t}:
+\begin{lstlisting}
+#include <stddef.h>
+
+size_t i, j;
+\end{lstlisting}
+
+
+
+\subsection{\texttt{int*\_t} и \texttt{uint*\_t}. Типы с заданным размером}
+Если потребуется хранить числа заданного размера, то заголовочный файл \texttt{stdint.h} объявляет ещё несколько целочисленных типов:
+\texttt{int8\_t}, \texttt{int16\_t}, \texttt{int32\_t}, \texttt{int64\_t},
+\texttt{uint8\_t}, \texttt{uint16\_t}, \texttt{uint32\_t}, \texttt{uint64\_t}.
+
+\begin{lstlisting}
+#include <stdint.h>
+
+// 1 byte -> [0-255] or [0x00-0xFF]
+uint8_t number8;
+
+// 2 bytes -> [0-65535] or [0x0000-0xFFFF]
+uint16_t number16;
+
+// 4 bytes -> [0-4294967295] or [0x00000000-0xFFFFFFFF]
+uint32_t number32;
+
+// 8 bytes -> [0-18446744073709551615] or [0x0000000000000000-0xFFFFFFFFFFFFFFFF]
+uint64_t number64;
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section[\texttt{float} и \texttt{double}. Числа с плавающей точкой]{\texttt{float} и \texttt{double}. Числа\\ с плавающей точкой}
+
+
+float
+
+double
+
+long double\index{long double}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{\texttt{bool}. Логический тип данных}
+
+Условное выражение может принимать одно из двух значений: \textit{истина} (\texttt{true}) или \textit{ложь} (\texttt{false}). Многие операторы языка Си возвращают логический тип данных, например, операторы сравнения:
+
+\begin{lstlisting}
+4 == 4  //true
+5 > 4   //true
+5 < 0   //false
+\end{lstlisting}
+
+Логические выражения могут быть \textit{истинными} и \textit{ложными} (когда результат вычисления выражения равен \texttt{true} или \texttt{false} соответственно).
+
+Изначально в стандарте C89 логического типа не существовало, и значение \texttt{true} представлено любым ненулевым значением, включая отрицательные числа. Значение \texttt{false} всегда представлено нулем. 
+
+Стандарт C99 оставляет совместимость с предыдущим стандартом и вводит новый тип данных: \texttt{\_Bool}. Для удобства использования логического типа данных и совместимостью с C++ стандартная библиотека предоставляет заголовочный файл \texttt{stdbool.h} с макросами \texttt{bool}, \texttt{true} и \texttt{false}:
+
+\begin{lstlisting}
+#include <stdbool.h>
+
+bool is_odd = true;
+bool is_fail = false;
+\end{lstlisting}
+
+Рекомендуется давать имена переменных логического типа с префиксом \texttt{is\_} для повышения уровня читабельности кода.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%\section{\texttt{complex}. Комплексные числа}
+%#include <complex.h>
+%#include <stdio.h>
+%void example (void)
+%{
+%complex double z = 1.0 + 3.0*I;
+%printf ("Phase is %f, modulus is %f\n", carg (z), cabs (z));
+%}
+
+\vfill
+\subsection*{Контрольные вопросы}
+\begin{enumerate}
+\item 
+\end{enumerate}
+\end{document}

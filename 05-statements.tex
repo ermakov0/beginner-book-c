@@ -1,0 +1,137 @@
+\documentclass[myc.tex]{subfiles}
+
+\begin{document}
+\chapter{Инструкции (statements)}
+
+\footnote{Будет использоваться термин <<исрукция>>
+
+
+Существует путаница в терминологии, как переводить слово <<statement>>. См. примечание на странице~\pageref{ch:operators} в главе~\ref{ch:operators}~<<\nameref{ch:operators}>>.
+
+Для создания большей путаницы в этой главе будет использоваться оба варианта перевода.}
+
+
+\section*{Как создавать и читать блок-схемы}
+\addcontentsline{toc}{section}{Как создавать и читать блок-схемы}
+\index{блок-схема}
+
+
+
+\section{Выражения как инструкции}
+
+
++инициализация переменных сразу.
+
+
+
+
+\section{\texttt{if}. Инструкция ветвления}
+\index{if}
+
+\noindent
+\includegraphics[scale=0.077]{images-gen/if.png}
+\begin{lstlisting}
+if ($\textit{выражение}$)
+    statement
+    
+if ($\textit{выражение}$)
+    statement
+else
+    statement
+\end{lstlisting}
+
+
+
+
+
+
+dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gdfg dfg dfg d gfg dfg dfg d g
+5
+
+\begin{lstlisting}[caption=Пример использования оператора if]
+if (a < 5) {
+    b = 0;
+}
+\end{lstlisting}
+
+Рекомендуется всегда ставить скобки.
+
+
+Поясним на примере. Предположим у нас был следующий код:
+\begin{lstlisting}
+if (a < 5)
+    b = 0;
+\end{lstlisting}
+
+И возникла потребность добавить ещё одну строку:
+\begin{lstlisting}
+if (a < 5)
+    b = 0;
+    c = 0; //error
+\end{lstlisting}
+
+Судя по отступу в 3 строке, программист хотел, чтобы переменной \texttt{c} присваивался ноль, если условие в 1 строке истинно. Однако, программа работает не так, как предполагал программист. Вне зависимости от истинности выражения, присваивание происходит всегда, так как записано за пределами конструкции \texttt{if}. Правильный вариант кода:
+\begin{lstlisting}
+if (a < 5) {
+    b = 0;
+    c = 0;
+}
+\end{lstlisting}
+
+
+
+
+В главе bool было сказано, что типа таого нета
+
+\begin{lstlisting}
+if (0)   { puts("0"); }
+if (1)   { puts("1"); }
+if (42)  { puts("42"); }
+if (-1)  { puts("-1"); }
+if (-42) { puts("-42"); }
+\end{lstlisting}
+
+\begin{verbatim}
+0
+45456
+545
+\end{verbatim} 
+
+
+\section{\texttt{switch}}
+\index{switch}
+
+\section{\texttt{while}. Цикл}
+\index{while}
+
+\section{\texttt{do}}
+\index{do}
+
+\section{\texttt{for}}
+\index{for}
+
+
+
+c99 for(int i;;i++)
+
+c89 for(;;i++)
+
+
+goto\index{goto}
+
+break\index{break}
+
+итд
+
+
+
+
+
+
+
+
+\subsection*{Контрольные вопросы}
+\begin{enumerate}
+\item 55
+\end{enumerate}
+\end{document}

@@ -1,0 +1,95 @@
+% pdflatex
+\documentclass[twoside,a5paper,12pt]{extbook}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel} 
+\usepackage[twoside, includehead, margin=10mm, left=25mm, bottom=15mm, headsep=2mm]{geometry}
+\usepackage{indentfirst}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{tabularx}
+\usepackage{subfiles}
+%\usepackage{amsmath}
+%\usepackage{multicol}
+
+\usepackage{enumitem}
+\setlist{nosep}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE,LO]{\fontsize{10}{12}\rightmark}
+
+\usepackage{titlesec}
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-36pt}{24pt}   % 50 40
+\titlespacing*{\section}{0pt}{12pt}{12pt}    % l t b
+\titlespacing*{\subsection}{0pt}{6pt}{6pt}
+
+% Эпиграфы всегда верстают на суженный формат (от ⅓ до ⅔ формата строки основного набора) 
+\usepackage{epigraph}
+\setlength{\epigraphwidth}{0.5\textwidth}
+
+\usepackage{listings}
+\lstset{
+    basicstyle=\small,
+    numbers=left,
+    language=C,
+    frame=single,
+    showstringspaces=false,
+    breaklines=true,
+    breakatwhitespace=false,
+    stringstyle=\ttfamily,
+    mathescape=true,
+    commentstyle=\color{red},
+}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    bookmarks=true,
+    pdftitle={Книга языка Си для начинающих с нуля},
+    pdfauthor={Ермаков А.В.},
+}
+
+\RequirePackage{caption}
+\DeclareCaptionLabelSeparator{defffis}{ --- }
+\captionsetup{justification=centering,labelsep=defffis}
+
+% https://tex.stackexchange.com/questions/23921/how-to-shorten-shrink-spaces-between-words
+\fontdimen3\font=4pt
+\hfuzz=4pt
+
+
+
+% масштаб синтаксических диаграмм
+\def \varscale{0.1}
+
+
+
+\begin{document}
+\subfile{title}
+\subfile{page2}
+
+%\newpage
+%\thispagestyle{empty}
+%\epigraph{Той, кто всегда сначала ищет решение любой проблемы в книгах.}
+
+
+\tableofcontents               % //done?
+\subfile{00-intro}             % +
+\subfile{01-build}             % +
+\subfile{02-tokens}            % +
+\subfile{03-types}             % 
+\subfile{04-operators}         % 
+\subfile{05-statements}        % 
+\subfile{06-funcions}          % 
+\subfile{07-preprocessor}      % 
+\subfile{draft}
+\subfile{ref}
+\end{document}
